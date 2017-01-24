@@ -1,14 +1,21 @@
-#Fill in the dependencies and rules to make the make file
+CC=gcc
+LD=gcc
+ifdef DEBUG
+CFLAGS= -std=c99 -ggdb -Wall
+else
+CFLAGS= -std=c99 -03
+endif
+LIBS= -lm
 
-testVectors: #depends on...
-	#rule to make testVectors from dependencies HINT: you need to add a flag for the math library (google it)
-	
-vectors.o: #depends on...
-	#rule to make vectors.o from dependencies
+testVectors: testVectors.o vectors.o vectors.h
+$(LD) -o testVectors vectors.o testVectors.o $(LIBS)
 
-testVectors.o: #depends on... 
-	#rule to make testVectors.o from dependences
+testVectors.o: testVectors.c
+$(CC) $(CFLAGS) -o testVectors.o 
+
+vectors.o: vectors.c vectors.h
+$(CC) $(CFLAGS) -o vectors.o -c vectors.c
 
 clean:
-	rm *.o
-	rm testVectors
+rm *.o
+rm testVectors
